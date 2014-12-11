@@ -1,0 +1,11 @@
+E:\Landscape generator\WpfApplication2\obj\Debug\Terrain_generator.csprojResolveAssemblyReference.cache
+E:\Landscape generator\WpfApplication2\obj\Debug\MainWindow.baml
+E:\Landscape generator\WpfApplication2\obj\Debug\MainWindow.g.cs
+E:\Landscape generator\WpfApplication2\obj\Debug\App.g.cs
+E:\Landscape generator\WpfApplication2\obj\Debug\WpfApplication2_Content.g.cs
+E:\Landscape generator\WpfApplication2\obj\Debug\WpfApplication2_MarkupCompile.cache
+E:\Landscape generator\WpfApplication2\obj\Debug\WpfApplication2.g.resources
+E:\Landscape generator\WpfApplication2\obj\Debug\WpfApplication2.Properties.Resources.resources
+E:\Landscape generator\WpfApplication2\obj\Debug\Terrain_generator.csproj.GenerateResource.Cache
+E:\Landscape generator\WpfApplication2\obj\Debug\WpfApplication2.exe
+E:\Landscape generator\WpfApplication2\obj\Debug\WpfApplication2.pdb
