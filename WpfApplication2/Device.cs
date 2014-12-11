@@ -55,7 +55,7 @@ namespace WpfApplication2
 
 
         // Put a pixel on screen at a specific X,Y coordinates
-        public void PutPixel(int x, int y, float z, Color4 color)
+        public void PutPixel(int x, int y, float z, SharpDX.Color color)
         {
             // Задний буфер - одноразмерный массив
             // Экран - двуразмерный, поэтому нужно посчитать
@@ -70,10 +70,10 @@ namespace WpfApplication2
 
             depthBuffer[index] = z;
 
-            backBuffer[index4] = (byte)(color.Blue * 255);
-            backBuffer[index4 + 1] = (byte)(color.Green * 255);
-            backBuffer[index4 + 2] = (byte)(color.Red * 255);
-            backBuffer[index4 + 3] = (byte)(color.Alpha * 255);
+            backBuffer[index4] = (byte)(color.B);
+            backBuffer[index4 + 1] = (byte)(color.G);
+            backBuffer[index4 + 2] = (byte)(color.R);
+            backBuffer[index4 + 3] = (byte)(color.A);
         }
 
         //public void DrawLine(Vector2 point0, Vector2 point1, SharpDX.Color color)
@@ -125,7 +125,7 @@ namespace WpfApplication2
 
 
         // Высвечивание пикселя
-        public void DrawPoint(Vector3 point, Color4 color)
+        public void DrawPoint(Vector3 point, SharpDX.Color color)
         {
             // Clipping what's visible on screen
             if (point.X >= 0 && point.Y >= 0 && point.X < bmp.PixelWidth && point.Y < bmp.PixelHeight)
@@ -265,20 +265,20 @@ namespace WpfApplication2
             //      - -
             //        -
             //       P3
-            else
-            {
-                for (var y = (int)p1.Y; y <= (int)p3.Y; y++)
-                {
-                    if (y < p2.Y)
-                    {
-                        ProcessScanLine(y, p1, p2, p1, p3, color);
-                    }
-                    else
-                    {
-                        ProcessScanLine(y, p2, p3, p1, p3, color);
-                    }
-                }
-            }
+            //else
+            //{
+            //    for (var y = (int)p1.Y; y <= (int)p3.Y; y++)
+            //    {
+            //        if (y < p2.Y)
+            //        {
+            //            ProcessScanLine(y, p1, p2, p1, p3, color);
+            //        }
+            //        else
+            //        {
+            //            ProcessScanLine(y, p2, p3, p1, p3, color);
+            //        }
+            //    }
+            //}
         }
 
         // The main method of the engine that re-compute each vertex projection
@@ -302,6 +302,7 @@ namespace WpfApplication2
 
                 SharpDX.Color terrain = new SharpDX.Color();
                 var triangleIndex = 0;
+                
                 foreach (var triangle in mesh.Polygons)
                 {
                     var vertexA = triangle.A;

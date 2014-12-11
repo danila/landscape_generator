@@ -29,7 +29,6 @@ namespace WpfApplication2
         }
 
     }
-
     public class Mesh
     {
         public Vector3[,] Vertices { get; private set; }
@@ -68,15 +67,15 @@ namespace WpfApplication2
                 {
                     Polygon temp = new Polygon();
                     temp.A = Vertices[i, j];
-                    temp.B = Vertices[i + 1, j];
-                    temp.C = Vertices[i, j + 1];
+                    temp.B = Vertices[i, j + 1];
+                    temp.C = Vertices[i + 1, j];
                     Polygons[k] = temp;
                     ++k;
 
                     Polygon temp1 = new Polygon();
                     temp1.A = Vertices[i, j + 1];
-                    temp1.B = Vertices[i + 1, j];
-                    temp1.C = Vertices[i + 1, j + 1];
+                    temp1.B = Vertices[i + 1, j + 1];
+                    temp1.C = Vertices[i + 1, j];
                     Polygons[k] = temp1;
                     ++k;
                 }

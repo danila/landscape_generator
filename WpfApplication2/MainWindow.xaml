@@ -1,14 +1,141 @@
-﻿<Window x:Class="WpfApplication2.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Name="MWindow"
-        Title="MainWindow" Height="922" Width="1450" FontFamily="Century Gothic" Background="White" KeyDown="Window_KeyDown" MouseDown="Window_MouseDown" >
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="WpfApplication2.MainWindow"
+        x:Name="MWindow"
+        Title="MainWindow" 
+        FontFamily="Century Gothic" 
+        Background="White" 
+        KeyDown="Window_KeyDown" 
+        MouseDown="Window_MouseDown" Width="1308" Height="772" MaxHeight="850"  >
 
 
-    <Image       
-                Name ="GraphicImage" 
-                  Loaded="GraphicImage_Loaded" Height="800" Width="1280" Margin="30,24,30,0" VerticalAlignment="Top" >
-    </Image>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="529*"/>
+            <ColumnDefinition Width="121*"/>
+        </Grid.ColumnDefinitions>
+        <Image       
+            
+            Grid.Column="0"
+            x:Name ="GraphicImage" 
+            Loaded="GraphicImage_Loaded" 
+            Width="1024" 
+            Height="700" 
+            MaxWidth="1024" 
+            MinWidth="1024" 
+            MinHeight="700" 
+            MaxHeight="700"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left" Margin="20,20,0,0"
+            />
+        <Border BorderBrush="LightGray" BorderThickness="3" HorizontalAlignment="Left" Height="700" Margin="20,20,0,0" VerticalAlignment="Top" Width="1024"/>
+
+        <GroupBox Grid.Column="1" Header="Параметры ландшафта" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="349" Width="222" FontSize="18"/>
+        <ComboBox
+            Name="ComboSize"
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Width="137" Margin="25,67,0,0" 
+            Height="25"
+            Background="{x:Null}" 
+            BorderBrush="#FFCFCFCF" 
+            FontSize="18">
+            <ComboBoxItem Name="thirtytwo">32*32</ComboBoxItem>
+            <ComboBoxItem Name="siztyfour">64*64</ComboBoxItem>
+            <ComboBoxItem Name="onetwenty">128*128</ComboBoxItem>
+            <ComboBoxItem Name="twofifty" IsSelected="True">256*256</ComboBoxItem>
+            <ComboBoxItem Name="fivethirteen">512*512</ComboBoxItem>
+        </ComboBox>
+        <Label 
+            Name="Size"
+            Content="Размер" 
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            Margin="25,38,0,0" 
+            VerticalAlignment="Top" 
+            Height="29" 
+            Width="78" 
+            FontSize="18"/>
+        <ComboBox 
+            Name="ComboAntialiasing"
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Width="137" Margin="25,127,0,0" 
+            Height="25"
+            Background="{x:Null}" 
+            BorderBrush="#FFCFCFCF" 
+            FontSize="18">
+            <ComboBoxItem Name="aanone">Отсутствует</ComboBoxItem>
+            <ComboBoxItem Name="aalow" IsSelected="True">Слабое</ComboBoxItem>
+            <ComboBoxItem Name="aameidum">Среднее</ComboBoxItem>
+            <ComboBoxItem Name="aahigh">Сильное</ComboBoxItem>
+        </ComboBox>
+        <Label 
+            Content="Сглаживание" 
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            Margin="25,98,0,0" 
+            VerticalAlignment="Top" 
+            Height="29" 
+            Width="123" 
+            FontSize="18"/>
+        <ComboBox 
+            Name="ComboWaterlevel"
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Width="137" Margin="25,186,0,0" 
+            Height="25"
+            Background="{x:Null}" 
+            BorderBrush="#FFCFCFCF" 
+            FontSize="18">
+            <ComboBoxItem Name="waterlow" IsSelected="True">Низкий</ComboBoxItem>
+            <ComboBoxItem Name="watermed">Средний</ComboBoxItem>
+            <ComboBoxItem Name="waterhigh">Высокий</ComboBoxItem>
+
+        </ComboBox>
+        <Label 
+            Content="Уровень воды" 
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            Margin="25,157,0,0" 
+            VerticalAlignment="Top" 
+            Height="29" 
+            Width="137" 
+            FontSize="18"/>
+
+        <ComboBox 
+            Name="ComboRoughness"
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Width="137" Margin="25,245,0,0" 
+            Height="25"
+            Background="{x:Null}" 
+            BorderBrush="#FFCFCFCF" 
+            FontSize="18">
+            <ComboBoxItem Name="roughlow">Слабая</ComboBoxItem>
+            <ComboBoxItem Name="roughmeidum" IsSelected="True">Средняя</ComboBoxItem>
+            <ComboBoxItem Name="roughhigh">Сильная</ComboBoxItem>
+        </ComboBox>
+        <Label 
+            Content="Шероховатость" 
+            Grid.Column="1" 
+            HorizontalAlignment="Left" 
+            Margin="25,216,0,0" 
+            VerticalAlignment="Top" 
+            Height="29" 
+            Width="148" 
+            FontSize="18"/>
+        <Button Content="Построить" Grid.Column="1" HorizontalAlignment="Left" Margin="25,671,0,0" VerticalAlignment="Top" Width="122" Background="{x:Null}" BorderBrush="#FFCFCFCF" FontSize="18" Click="Button_Click"/>
+
+
+    </Grid>
+
+
 
 
 

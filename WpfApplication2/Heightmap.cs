@@ -13,7 +13,8 @@ namespace WpfApplication2
         private int max;
         private int height;
         private int filter_size;
-        Random random = new Random(DateTime.Now.Millisecond);
+        Random random = new Random(Guid.NewGuid().GetHashCode());
+        
 
         double get_element(int x, int y)
         {
@@ -40,11 +41,11 @@ namespace WpfApplication2
 
         public double[,] Generate(double roughness)
         {
-            
-            map[0, 0] = random.NextDouble() * height;
-            map[0, max] = random.NextDouble() * height;
-            map[max, 0] = random.NextDouble() * height;
-            map[max, max] = random.NextDouble() * height;
+
+            map[0, 0] = random.Next() % height;
+            map[0, max] = random.Next() % height;
+            map[max, 0] = random.Next() % height;
+            map[max, max] = random.Next() % height;
 
             Divide(size, roughness);
             SmoothTerrain(filter_size, size);
@@ -106,14 +107,17 @@ namespace WpfApplication2
 
         private void SmoothTerrain(int filtersize, int size)
         {
+            if (filtersize == -1)
+                return;
 
+            filtersize = (int)Math.Pow(2, filtersize) + 1;
             int count = 0;
             double total = 0;
 
             //loop through all the values
-            for (int x = 0; x < size - 1; x++)
+            for (int x = 0; x < size; x++)
             {
-                for (int y = 0; y < size - 1; y++)
+                for (int y = 0; y < size; y++)
                 {
 
                     //count keeps track of how many points contribute to the total value at this point
