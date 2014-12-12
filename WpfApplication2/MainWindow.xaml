@@ -31,7 +31,7 @@
             />
         <Border BorderBrush="LightGray" BorderThickness="3" HorizontalAlignment="Left" Height="700" Margin="20,20,0,0" VerticalAlignment="Top" Width="1024"/>
 
-        <GroupBox Grid.Column="1" Header="Параметры ландшафта" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="349" Width="222" FontSize="18"/>
+        <GroupBox Grid.Column="1" Header="Параметры ландшафта" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="274" Width="222" FontSize="18"/>
         <ComboBox
             Name="ComboSize"
             Grid.Column="1" 
@@ -130,7 +130,7 @@
             Height="29" 
             Width="148" 
             FontSize="18"/>
-        <Button Content="Построить" Grid.Column="1" HorizontalAlignment="Left" Margin="25,671,0,0" VerticalAlignment="Top" Width="122" Background="{x:Null}" BorderBrush="#FFCFCFCF" FontSize="18" Click="Button_Click"/>
+        <Button Content="Построить" Grid.Column="1" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Width="122" Background="{x:Null}" BorderBrush="#FFCFCFCF" FontSize="18" Click="Button_Click"/>
 
 
     </Grid>

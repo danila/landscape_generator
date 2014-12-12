@@ -31,7 +31,7 @@ namespace WpfApplication2
         void RefreshScene()
         {
             device.Clear(70, 70, 70, 255);
-            device.Render(cam, mesh);
+            device.Render(cam, lightPos, mesh);
             device.Present();
         }
         void CompositionTarget_Rendering(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace WpfApplication2
             //cam.Position = new Vector3(cam.Position.X + 1f, cam.Position.Y + 1f, cam.Position.Z);
 
             // Doing the various matrix operations
-            device.Render(cam, mesh);
+            device.Render(cam, lightPos, mesh);
 
             // Flushing the back buffer into the front buffer
             device.Present();
@@ -54,7 +54,7 @@ namespace WpfApplication2
 
 
 
-
+         Vector3 lightPos = new Vector3(1500, -700, -1500);
         public static int SEED = 8;
         public static int FILTER = 3;
         public static int DATA_SIZE = 257;
@@ -104,9 +104,9 @@ namespace WpfApplication2
             mesh.Rotation = new Vector3(3.14159265f, 0, 0);
             cam.Position = new Vector3(-700.0f, 500f, 0f);
             Vector3 target = new Vector3();
-            target.X = mesh.Vertices[(int)Math.Pow(2, SEED) / 2, (int)Math.Pow(2, SEED) / 2].X;
+            target.X = mesh.Vertices[(int)Math.Pow(2, SEED) / 2, (int)Math.Pow(2, SEED) / 2].Coordinates.X;
             target.Y = -(int)(MAX_HEIGHT / 2);
-            target.Z = -mesh.Vertices[(int)Math.Pow(2, SEED) / 2, (int)Math.Pow(2, SEED) / 2].Z;
+            target.Z = -mesh.Vertices[(int)Math.Pow(2, SEED) / 2, (int)Math.Pow(2, SEED) / 2].Coordinates.Z;
             cam.Target = target;
         }
 
@@ -132,6 +132,23 @@ namespace WpfApplication2
                 RefreshScene();
 
             }
+            if (e.Key == Key.Z)
+            {
+                lightPos.Z += 50;
+                RefreshScene();
+            }
+            if (e.Key == Key.X)
+            {
+                lightPos.X -= 50;
+                RefreshScene();
+            }
+            if (e.Key == Key.C)
+            {
+                lightPos.Y += 50;
+                RefreshScene();
+            }
+
+
 
             if (e.Key == Key.W)
             {

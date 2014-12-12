@@ -13,34 +13,43 @@ namespace WpfApplication2
         public Vector3 Target { get; set; }
     }
 
+    public struct Vertex
+    {
+        public Vector3 Normal
+        { get; set; }
+
+        public Vector3 Coordinates;
+        public Vector3 WorldCoordinates;
+    }
     public class Polygon
     {
-        public Vector3 A;
-        public Vector3 B;
-        public Vector3 C;
+        public Vertex A;
+        public Vertex B;
+        public Vertex C;
 
-        public Vector3 Vertices { get; private set; }
         public Polygon() { }
-        public Polygon(Vector3 a, Vector3 b, Vector3 c)
+        public Polygon(Vertex a, Vertex b, Vertex c)
         {
             A = a;
             B = b;
             C = c;
         }
-
     }
+
     public class Mesh
     {
-        public Vector3[,] Vertices { get; private set; }
+        public Vertex[,] Vertices { get; private set; }
         public Polygon[] Polygons { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
 
         public Mesh(int size)
         {
-            Vertices = new Vector3[size, size];
+            Vertices = new Vertex[size, size];
             Polygons = new Polygon[(size-1) * (size-1) * 2];
         }
+
+
 
         internal void GetVertices(double[,] map, int size)
         {
@@ -49,9 +58,10 @@ namespace WpfApplication2
                 for (int y = 0; y < size - 1; ++y)
                 {
                     //populate the point struct
-                    Vertices[x, y].X = x;
-                    Vertices[x, y].Y = (float)map[x, y];
-                    Vertices[x, y].Z = y;
+                    Vertices[x, y].Coordinates.X = x;
+                    Vertices[x, y].Coordinates.Y = (float)map[x, y];
+                    Vertices[x, y].Coordinates.Z = y;
+                    Vertices[x, y].Normal = Vector3.Normalize(Vertices[x, y].Coordinates);
                 }
             }
 
@@ -65,6 +75,8 @@ namespace WpfApplication2
             {
                 for (int j = 0; j < size - 2; ++j)
                 {
+                    if (i == size / 2 && j == size / 2)
+                    { }
                     Polygon temp = new Polygon();
                     temp.A = Vertices[i, j];
                     temp.B = Vertices[i, j + 1];

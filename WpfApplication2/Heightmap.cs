@@ -149,6 +149,7 @@ namespace WpfApplication2
                         map[x,y] = total / (float)count;
 
 
+
                 } //y
             } //x
         }
