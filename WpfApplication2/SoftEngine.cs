@@ -38,15 +38,17 @@ namespace WpfApplication2
 
     public class Mesh
     {
+        public int MaxHeight;
         public Vertex[,] Vertices { get; private set; }
         public Polygon[] Polygons { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
 
-        public Mesh(int size)
+        public Mesh(int size, int maxHeight)
         {
             Vertices = new Vertex[size, size];
             Polygons = new Polygon[(size-1) * (size-1) * 2];
+            MaxHeight = maxHeight;
         }
 
 

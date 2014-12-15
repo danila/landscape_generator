@@ -341,7 +341,7 @@ namespace WpfApplication2
 
                 Matrix transformMatrix = worldMatrix*viewMatrix*projectionMatrix;
 
-                SharpDX.Color terrain = new SharpDX.Color();
+                Color4 terrain = new SharpDX.Color();
                 var triangleIndex = 0;
 
 
@@ -355,24 +355,37 @@ namespace WpfApplication2
                     var pixelB = Project(vertexB, transformMatrix, worldMatrix);
                     var pixelC = Project(vertexC, transformMatrix, worldMatrix);
 
-                    if (triangleIndex == 70000) 
-                    { };
+                    
+                    //Color4 desert = new Color4(221f / 255f, 202f / 255f, 113f / 255f, 255f / 255f);
+                    //Color4 grassland = new Color4(105f / 255f, 148f / 255f, 67f / 255f, 255f / 255f);
+                    //Color4 grassland = new Color4(138f / 255f, 167f / 255f, 44f / 255f, 255f / 255f);
 
-                    if (triangle.A.Coordinates.Y <= 10)
-                        terrain = SharpDX.Color.Blue;
-                    else if (triangle.A.Coordinates.Y < 40)
+                    Color4 deepsea = new Color4(26f / 255f, 59f / 255f, 142f / 255f, 255f / 255f);
+                    Color4 desert = new Color4(219f / 255f, 209f / 255f, 107f / 255f, 255f / 255f);
+                    Color4 grassland = new Color4(104f / 255f, 160f / 255f, 25f / 255f, 255f / 255f);
+                    Color4 decidousforest = new Color4(75f / 255f, 128f / 255f, 46f / 255f, 255f / 255f);
+                    Color4 rainforest = new Color4(137 / 255f, 138 / 255f, 64 / 255f, 255f / 255f);
+                    Color4 bare = new Color4(195f / 255f, 195f / 255f, 185f / 255f, 255f / 255f);
+                    Color4 dirt = new Color4(18f / 255f, 187f / 255f, 186f / 255f, 255f / 255f);
+
+                    Color4 snow = new Color4(248f / 255f, 248f / 255f, 248f / 255f, 255f / 255f);
+                    int maxY = mesh.MaxHeight;
+
+                    if (triangle.A.Coordinates.Y <= maxY * 0.1) 
+                        terrain = deepsea;
+                    else if (triangle.A.Coordinates.Y < maxY * 0.20)
                         terrain = SharpDX.Color.RoyalBlue;
-                    else if (triangle.A.Coordinates.Y < 50)
-                        terrain = SharpDX.Color.Olive;
-                    else if (triangle.A.Coordinates.Y < 80)
-                        terrain = SharpDX.Color.DarkGreen;
-                    else if (triangle.A.Coordinates.Y < 120)
-                        terrain = SharpDX.Color.Chocolate;
-                    else if (triangle.A.Coordinates.Y < 240)
-                        terrain = SharpDX.Color.Moccasin;
+                    else if (triangle.A.Coordinates.Y < maxY * 0.27)
+                        terrain = desert;
+                    else if (triangle.A.Coordinates.Y < maxY * 0.7)
+                        terrain = grassland;
+                    else if (triangle.A.Coordinates.Y < maxY)
+                        terrain = decidousforest;
+                    else if (triangle.A.Coordinates.Y < maxY*1.2)
+                        terrain = bare;
 
                     else
-                        terrain = SharpDX.Color.Green;
+                        terrain = snow;
 
                     //var color = 0.25f + (triangleIndex % mesh.Polygons.Length) * 0.75f / mesh.Polygons.Length;
 

@@ -54,7 +54,7 @@ namespace WpfApplication2
 
 
 
-         Vector3 lightPos = new Vector3(1500, -700, -1500);
+        public Vector3 lightPos = new Vector3(1500, -700, -1500);
         public static int SEED = 8;
         public static int FILTER = 3;
         public static int DATA_SIZE = 257;
@@ -86,7 +86,7 @@ namespace WpfApplication2
 
 
             device = new Device(bmp);
-            mesh = new Mesh(DATA_SIZE-1);
+            mesh = new Mesh(DATA_SIZE-1, MAX_HEIGHT);
             cam = new Camera();
             GraphicImage.Source = bmp;
             heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER);
@@ -223,7 +223,7 @@ namespace WpfApplication2
                 ROUGHNESS = 0.9;
             }
             
-            mesh = new Mesh(DATA_SIZE - 1);
+            mesh = new Mesh(DATA_SIZE - 1, MAX_HEIGHT);
             heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER);
             map = heightmap.Generate(ROUGHNESS);
             mesh.GetVertices(map, DATA_SIZE);
@@ -234,6 +234,7 @@ namespace WpfApplication2
             RefreshScene();
 
         }
+
 
 
     }

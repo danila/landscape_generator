@@ -130,7 +130,7 @@
             Height="29" 
             Width="148" 
             FontSize="18"/>
-        <Button Content="Построить" Grid.Column="1" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Width="122" Background="{x:Null}" BorderBrush="#FFCFCFCF" FontSize="18" Click="Button_Click"/>
+        <Button Name="Build" Content="Построить" Grid.Column="1" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Width="122" Background="{x:Null}" BorderBrush="#FFCFCFCF" FontSize="18" Click="Button_Click"/>
 
 
     </Grid>
