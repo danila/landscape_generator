@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 using SharpDX;
 using SharpDX.Direct3D11;
 
@@ -33,6 +34,9 @@ namespace WpfApplication2
             device.Clear(70, 70, 70, 255);
             device.Render(cam, lightPos, mesh);
             device.Present();
+
+            LblPolygonsNum.Content = mesh.Polygons.Length.ToString();
+            LblVerticiesNum.Content = mesh.Vertices.Length.ToString();
         }
         void CompositionTarget_Rendering(object sender, EventArgs e)
         {
@@ -52,16 +56,17 @@ namespace WpfApplication2
             device.Present();
         }
 
-
+        Stopwatch Timer = new Stopwatch();
 
         public Vector3 lightPos = new Vector3(1500, -700, -1500);
         public static int SEED = 8;
         public static int FILTER = 3;
-        public static int DATA_SIZE = 257;
+        public static int DATA_SIZE = 257;  
         public static int MAX_HEIGHT = 128;
+        public static double WATER_FACTOR = 0.1;
         public static double ROUGHNESS = 0.6;
+        public static bool WATER_FILL = false;
         public double[,] map = new double[DATA_SIZE-1, DATA_SIZE-1];
-        public static bool allowed = true;
 
         public double prevX;
         public double prevY;
@@ -73,8 +78,8 @@ namespace WpfApplication2
         private int RAND_MAX = 0;
 
 
-        private Device device;
-        Mesh mesh;
+        private Engine device;
+        Terra mesh;
         Camera cam;
 
         private Heightmap heightmap;
@@ -85,28 +90,33 @@ namespace WpfApplication2
             WriteableBitmap bmp = new WriteableBitmap((int)1024, (int)700, 96, 96, PixelFormats.Bgra32, null);
 
 
-            device = new Device(bmp);
-            mesh = new Mesh(DATA_SIZE-1, MAX_HEIGHT);
+            device = new Engine(bmp);
+            mesh = new Terra(DATA_SIZE-1, MAX_HEIGHT, WATER_FACTOR);
             cam = new Camera();
             GraphicImage.Source = bmp;
-            heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER);
+
+            Timer.Restart();
+            
+            heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER, WATER_FACTOR, WATER_FILL);
             map = heightmap.Generate(ROUGHNESS);
             mesh.GetVertices(map, DATA_SIZE);
             CameraAdjust();
-
-
-            //CompositionTarget.Rendering += CompositionTarget_Rendering;
             RefreshScene();
+            Timer.Stop();
+
+            LblTime.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
         }
 
         private void CameraAdjust()
         {
+            int middle = (int)((DATA_SIZE - 1) / 2);
             mesh.Rotation = new Vector3(3.14159265f, 0, 0);
+            //cam.Position = new Vector3(mesh.Vertices[middle, middle].Coordinates.X - DATA_SIZE * 2, mesh.Vertices[middle / 2, middle].Coordinates.X + DATA_SIZE * 2, 0f);
             cam.Position = new Vector3(-700.0f, 500f, 0f);
             Vector3 target = new Vector3();
-            target.X = mesh.Vertices[(int)Math.Pow(2, SEED) / 2, (int)Math.Pow(2, SEED) / 2].Coordinates.X;
+            target.X = mesh.Vertices[middle, middle].Coordinates.X;
             target.Y = -(int)(MAX_HEIGHT / 2);
-            target.Z = -mesh.Vertices[(int)Math.Pow(2, SEED) / 2, (int)Math.Pow(2, SEED) / 2].Coordinates.Z;
+            target.Z = -mesh.Vertices[middle, middle].Coordinates.Z;
             cam.Target = target;
         }
 
@@ -116,7 +126,7 @@ namespace WpfApplication2
             if (e.Key == Key.Up)
             {
                 ROUGHNESS += 0.05;
-                heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER);
+                heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER, WATER_FACTOR, WATER_FILL);
                 map = heightmap.Generate(ROUGHNESS);
                 mesh.GetVertices(map, DATA_SIZE);
                 RefreshScene();
@@ -126,7 +136,7 @@ namespace WpfApplication2
             if (e.Key == Key.Down)
             {
                 ROUGHNESS -= 0.05;
-                heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER);
+                heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER, WATER_FACTOR, WATER_FILL);
                 map = heightmap.Generate(ROUGHNESS);
                 mesh.GetVertices(map, DATA_SIZE);
                 RefreshScene();
@@ -214,26 +224,44 @@ namespace WpfApplication2
                 FILTER = aa_index;
 
             var rough_index = ComboRoughness.SelectedIndex;
-            if (rough_index == 0)
-            {
+            if (rough_index == 0) {
                 ROUGHNESS = 0.1;
             } else if (rough_index == 1) {
                 ROUGHNESS = 0.6;
             } else if (rough_index == 2) {
                 ROUGHNESS = 0.9;
             }
-            
-            mesh = new Mesh(DATA_SIZE - 1, MAX_HEIGHT);
-            heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER);
+
+            var water_level = ComboWaterlevel.SelectedIndex;
+            if (water_level == 0) {
+                WATER_FACTOR = 0.1;
+            } else if (water_level == 1) {
+                WATER_FACTOR = 0.3;
+            } else if (water_level == 2) {
+                WATER_FACTOR = 0.6;
+            }
+
+            if (CheckFill.IsChecked == true)
+                WATER_FILL = true;
+            else
+                WATER_FILL = false;
+
+
+            mesh = new Terra(DATA_SIZE - 1, MAX_HEIGHT, WATER_FACTOR);
+
+            Timer.Restart();
+            heightmap = new Heightmap(SEED, MAX_HEIGHT, FILTER, WATER_FACTOR, WATER_FILL);
             map = heightmap.Generate(ROUGHNESS);
             mesh.GetVertices(map, DATA_SIZE);
             CameraAdjust();
-
-
-            //CompositionTarget.Rendering += CompositionTarget_Rendering;
             RefreshScene();
 
+            Timer.Stop();
+            LblTime.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
+
         }
+
+
 
 
 

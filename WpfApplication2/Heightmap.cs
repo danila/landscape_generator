@@ -13,6 +13,8 @@ namespace WpfApplication2
         private int max;
         private int height;
         private int filter_size;
+        private double water_factor;
+        private bool water_fill;
         Random random = new Random(Guid.NewGuid().GetHashCode());
         
 
@@ -30,15 +32,26 @@ namespace WpfApplication2
 
             return map[x, y];
         }
-        public Heightmap(int _detail, int _height, int _filter_size)
+        public Heightmap(int _detail, int _height, int _filter_size, double _water_factor, bool _water_fill)
         {
             filter_size = _filter_size;
             height = _height;
             size = (int)Math.Pow(2, _detail) + 1;
             max = size-1;
             map = new double[size, size];
+            water_factor = _water_factor;
+            water_fill = _water_fill;
         }
 
+        public void WaterFill(double water_factor)
+        {
+            int x, y;
+            int level = (int)(height * water_factor);
+            for (y = 0; y < max; ++y)
+                for (x = 0; x < max; ++x)
+                    if (map[x, y] <= level)
+                        map[x, y] = level;
+        }
         public double[,] Generate(double roughness)
         {
 
@@ -50,7 +63,8 @@ namespace WpfApplication2
             Divide(size, roughness);
             SmoothTerrain(filter_size, size);
 
-
+            if (water_fill)
+                WaterFill(water_factor);
             return map;
         }
 

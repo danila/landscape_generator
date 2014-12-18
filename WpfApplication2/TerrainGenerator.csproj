@@ -71,7 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Device.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="Heightmap.cs" />
     <Compile Include="SoftEngine.cs" />
     <Page Include="MainWindow.xaml">

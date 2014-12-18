@@ -7,7 +7,7 @@ using SharpDX;
 
 namespace WpfApplication2
 {
-    public class Camera
+    public class Camera 
     {
         public Vector3 Position { get; set; }
         public Vector3 Target { get; set; }
@@ -36,19 +36,21 @@ namespace WpfApplication2
         }
     }
 
-    public class Mesh
+    public class Terra : Polygon
     {
         public int MaxHeight;
+        public double WaterFactor;
         public Vertex[,] Vertices { get; private set; }
         public Polygon[] Polygons { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
 
-        public Mesh(int size, int maxHeight)
+        public Terra(int size, int maxHeight, double waterFactor)
         {
             Vertices = new Vertex[size, size];
             Polygons = new Polygon[(size-1) * (size-1) * 2];
             MaxHeight = maxHeight;
+            WaterFactor = waterFactor;
         }
 
 
