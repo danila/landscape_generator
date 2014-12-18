@@ -101,10 +101,14 @@ namespace WpfApplication2
             map = heightmap.Generate(ROUGHNESS);
             mesh.GetVertices(map, DATA_SIZE);
             CameraAdjust();
+            Timer.Stop();
+            LblTimeGen.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
+
+            Timer.Restart();
             RefreshScene();
             Timer.Stop();
 
-            LblTime.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
+            LblTimeDraw.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
         }
 
         private void CameraAdjust()
@@ -112,7 +116,7 @@ namespace WpfApplication2
             int middle = (int)((DATA_SIZE - 1) / 2);
             mesh.Rotation = new Vector3(3.14159265f, 0, 0);
             //cam.Position = new Vector3(mesh.Vertices[middle, middle].Coordinates.X - DATA_SIZE * 2, mesh.Vertices[middle / 2, middle].Coordinates.X + DATA_SIZE * 2, 0f);
-            cam.Position = new Vector3(-700.0f, 500f, 0f);
+            cam.Position = new Vector3(-700.0f, 600f, 0f);
             Vector3 target = new Vector3();
             target.X = mesh.Vertices[middle, middle].Coordinates.X;
             target.Y = -(int)(MAX_HEIGHT / 2);
@@ -225,11 +229,11 @@ namespace WpfApplication2
 
             var rough_index = ComboRoughness.SelectedIndex;
             if (rough_index == 0) {
-                ROUGHNESS = 0.1;
+                ROUGHNESS = 0.8;
             } else if (rough_index == 1) {
-                ROUGHNESS = 0.6;
+                ROUGHNESS = 0.5;
             } else if (rough_index == 2) {
-                ROUGHNESS = 0.9;
+                ROUGHNESS = 0.8;
             }
 
             var water_level = ComboWaterlevel.SelectedIndex;
@@ -254,10 +258,13 @@ namespace WpfApplication2
             map = heightmap.Generate(ROUGHNESS);
             mesh.GetVertices(map, DATA_SIZE);
             CameraAdjust();
-            RefreshScene();
-
             Timer.Stop();
-            LblTime.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
+            LblTimeGen.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
+
+            Timer.Restart();
+            RefreshScene();
+            Timer.Stop();
+            LblTimeDraw.Content = Timer.Elapsed.Seconds.ToString() + ":" + Timer.Elapsed.Milliseconds.ToString();
 
         }
 
